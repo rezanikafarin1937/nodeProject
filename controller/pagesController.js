@@ -1,7 +1,13 @@
+const Utils = require('../utils/Utils')
 
-const arr = __dirname.split('\\');
-arr.splice(arr.length - 1,1);
-const path = arr.join('/');
+const path = Utils.getPathActive(__dirname,1)
+
+console.log('path = ',path)
+
+
+// const arr = __dirname.split('\\');
+// arr.splice(arr.length - 1,1);
+// const path = arr.join('/');
 
 const home = (req, res) => {
   res.sendFile(path + "/views/index.html");

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const PagesController = require('../../src/controller/pagesController')
+const PagesController = require('../controller/pagesController')
 
 
 // console.log(__dirname);
@@ -16,9 +16,6 @@ router.get('/create',PagesController.create )
 router.get('/about-me', PagesController.aboutMe)
 
 //404 page 
-router.use((req,res)=>{
-     res.sendFile(path.join(__dirname, "../views/404.html"));
-
-})
+router.use(PagesController.notFound)
 
 module.exports = router;

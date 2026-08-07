@@ -1,14 +1,14 @@
 import Table from './models/Table.js';
 
 const data = {
-    name : 'عباس ',
-    mobile : '09184452921',
-    address : 'مونیخ',
+    name : 'میلاد نوری',
+    mobile : '09126937759',
+    address : 'تهران',
 }
 
 const table = new Table('users')
 
-const result = await table.deleteRecord(3)
+const result = await table.insertRecord(data)
 console.log(result);
 
 const all = await table.getAllRecords()

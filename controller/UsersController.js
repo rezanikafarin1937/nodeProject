@@ -1,6 +1,7 @@
 import Joi from "joi";
+import Table from "../models/Table.js";
 
-const Register = (req, res, next) => {
+const Register = async (req, res, next) => {
   const schema = {
     username: Joi.string().min(3).max(50).required(),
     mobile: Joi.string().min(10).max(11).required(),
@@ -8,9 +9,13 @@ const Register = (req, res, next) => {
     // email : Joi.string().email().required()
   };
   const validateResult = Joi.object(schema).validate(req.body);
-  console.log(validateResult)
-  res.send(validateResult)
-//   res.send('reza nikafarin')
+//   res.send(validateResult)
+// res.send(typeof req.body)
+  if(validateResult){
+    const table = new Table('users');
+    const result = await table.insertRecord(req.body)
+    res.send(req.body)
+  }
 };
 
 const Login = (req, res, next) => {};

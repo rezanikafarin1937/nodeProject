@@ -18,6 +18,11 @@ class Table {
     return [...data][0];
   };
 
+  getByField = async (field,value) => {
+    const [result] = await pool.query(`select * from ${this.tableName} where ${field} = ?`,[value])
+    return result;
+  }
+
   insertRecord = async (data) => {
     const fields = Object.keys(data).join(", ");
     const values = Object.values(data);

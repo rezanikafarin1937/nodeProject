@@ -7,7 +7,8 @@ const pagesRoute = require("./router/web/PagesRoutes");
 const UsersRoutes = require("./router/api/UsersRoutes");
 
 app.use(cors({
-  origin: "http://localhost:3000"
+  origin: "http://localhost:3000",
+  
 }));
 
 app.use(express.json());
@@ -20,19 +21,3 @@ app.listen(8000, () => {
   console.log("Server running on port 8000");
 });
 
-
-
-
-// const express = require("express");
-// const cors = require("cors");
-// const app = express();
-// const pagesRoute = require("./router/web/PagesRoutes");
-// const UsersRoutes = require("./router/api/UsersRoutes")
-
-// app.use(express.static("public"));
-
-// // app.use("/", pagesRoute);
-
-// app.use("/api/users",UsersRoutes)
-
-// app.listen(8000);

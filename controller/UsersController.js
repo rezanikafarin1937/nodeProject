@@ -55,7 +55,11 @@ const Register = async (req, res, next) => {
   res.status(201).json({
     message: "Registered successfully",
     token,
-    name: req.body.name
+    user: {
+      id: result.insertId,
+      name: req.body.name,
+      mobile: req.body.mobile,
+    },
   });
 };
 
@@ -119,7 +123,11 @@ const Login = async (req, res, next) => {
   return res.status(200).json({
     message: "Login successful",
     token,
-    name: user.name
+    user: {
+      id: user.id,
+      name: user.name,
+      mobile: user.mobile,
+    },
   });
 };
 

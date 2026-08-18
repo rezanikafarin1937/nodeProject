@@ -2,6 +2,11 @@ import Joi from "joi";
 import crypto from "crypto";
 import Table from "../models/Table.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 
 const Register = async (req, res, next) => {
   const schema = {
@@ -36,22 +41,30 @@ const Register = async (req, res, next) => {
   //create hash password
   const hashedPassword = await bcrypt.hash(req.body.password, 12);
 
+
   // create token
-  const token = crypto.randomBytes(32).toString("hex");
+  // const token = crypto.randomBytes(32).toString("hex");
+  
+
+
   // create hash token
-  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+  // const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
   // create expires at
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  // const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
   const userData = {
     ...req.body,
     password: hashedPassword,
-    api_token: hashedToken,
-    token_expires_at: expiresAt,
+    // api_token: hashedToken,
+    // token_expires_at: expiresAt,
   };
 
   const result = await table.insertRecord(userData);
+
+  const token = jwt.sign({id : result.insertId,name : req.body.name},process.env.SECRET_KEY)
+
+
   res.status(201).json({
     message: "Registered successfully",
     token,
@@ -105,19 +118,20 @@ const Login = async (req, res, next) => {
   }
 
   // create new token
-  const token = crypto.randomBytes(32).toString("hex");
+  // const token = crypto.randomBytes(32).toString("hex");
+    const token = jwt.sign({id : user.id,name : user.name},process.env.SECRET_KEY)
 
   // create hash token
-  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+  // const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
   // create new expires at
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  // const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
   // save hash token
-  await table.updateRecord(user.id, {
-    api_token: hashedToken,
-    token_expires_at: expiresAt,
-  });
+  // await table.updateRecord(user.id, {
+  //   api_token: hashedToken,
+  //   token_expires_at: expiresAt,
+  // });
 
   // send token to client
   return res.status(200).json({

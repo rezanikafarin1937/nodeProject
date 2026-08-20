@@ -16,9 +16,6 @@ function auth(req, res, next) {
             process.env.SECRET_KEY
         );
 
-        console.log("req.body = ",req.body)
-        console.log("decode = ",decode)
-
         next();
 
     } catch (err) {
@@ -29,3 +26,24 @@ function auth(req, res, next) {
 module.exports = auth;
 
 
+// import jwt from "jsonwebtoken"
+// import dotenv from "dotenv";
+
+// dotenv.config();
+
+// function auth(req,res,next){
+//     const token = req.header("Authorization")
+//     if(!token){
+//         return res.status(401).send("Access denied")
+//     }
+
+//     try{
+//     const decode = jwt.verify(token,process.env.SECRET_KEY)
+//     }
+//     catch(err){
+//         return res.status(400).send(err)
+//     }
+
+// }
+
+// module.exports = auth;

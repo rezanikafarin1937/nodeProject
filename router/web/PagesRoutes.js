@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const PagesController = require("../../controller/PagesController");
+const auth = require("../../middlewares/auth")
 
-router.get("/", PagesController.home);
 
-router.get("/about", PagesController.about);
+router.get("/",auth, PagesController.home);
 
-router.get("/create", PagesController.create);
+router.get("/about" ,auth,PagesController.about);
+
+router.get("/create",  PagesController.create);
 
 //redirect
 router.get("/about-me", PagesController.aboutMe);

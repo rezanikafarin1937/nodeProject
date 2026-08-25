@@ -35,5 +35,27 @@ class FakeData {
       console.error("خطا:", error);
     }
   };
+
+  static insertImages = async () => {
+    try {
+      const sql = `
+      INSERT INTO images (imageId, Path)
+      VALUES (?, ?)
+    `;
+
+      for (let i = 1; i <= 95; i++) {
+        const imagePath = `/images/${i}/${i}.jfif`;
+
+        await pool.execute(sql, [i, imagePath]);
+
+        console.log(`Image ${i} inserted.`);
+      }
+
+      console.log("تمام 95 مسیر عکس با موفقیت ذخیره شدند.");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 }
+
 export default FakeData;
